@@ -1,15 +1,25 @@
-name: Check
+name: Publish Cache
 
 on:
-  pull_request:
+  push:
+    branches:
+      - master
   workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
-  check:
-    runs-on: ubuntu-latest
+  publish-cache:
+    name: Build and publish (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+
     steps:
       - uses: actions/checkout@v6
 
@@ -18,8 +28,10 @@ jobs:
           extra_nix_config: |
             experimental-features = nix-command flakes
 
-      - name: Lint GitHub Actions workflows
-        run: nix run nixpkgs#actionlint
+      - uses: cachix/cachix-action@v17
+        with:
+          name: albert-flakes
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
 
       - name: Show flake outputs
         run: nix flake show --allow-import-from-derivation
