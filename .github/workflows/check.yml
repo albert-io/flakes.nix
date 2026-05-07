@@ -1,0 +1,37 @@
+name: Check
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+
+      - name: Lint GitHub Actions workflows
+        run: nix run nixpkgs#actionlint
+
+      - name: Show flake outputs
+        run: nix flake show --allow-import-from-derivation
+
+      - name: Check flake
+        run: nix flake check --allow-import-from-derivation
+
+      - name: Build dexter
+        run: nix build .#dexter --print-build-logs
+
+      - name: Build honeybadger-mcp-server
+        run: nix build .#honeybadger-mcp-server --print-build-logs
