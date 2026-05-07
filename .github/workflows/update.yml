@@ -1,0 +1,75 @@
+name: Update packages
+
+on:
+  schedule:
+    # Nightly at 03:00 UTC.
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+    inputs:
+      package:
+        description: "Package to update, or all"
+        required: false
+        default: "all"
+        type: choice
+        options:
+          - all
+          - dexter
+          - honeybadger-mcp-server
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        package:
+          - dexter
+          - honeybadger-mcp-server
+
+    steps:
+      - name: Skip unselected package
+        if: github.event_name == 'workflow_dispatch' && inputs.package != 'all' && inputs.package != matrix.package
+        run: echo "Skipping ${{ matrix.package }}"
+
+      - uses: actions/checkout@v4
+        if: github.event_name != 'workflow_dispatch' || inputs.package == 'all' || inputs.package == matrix.package
+
+      - uses: cachix/install-nix-action@v31
+        if: github.event_name != 'workflow_dispatch' || inputs.package == 'all' || inputs.package == matrix.package
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+
+      - name: Update package
+        if: github.event_name != 'workflow_dispatch' || inputs.package == 'all' || inputs.package == matrix.package
+        run: |
+          set -euo pipefail
+
+          args_file="packages/${{ matrix.package }}/nix-update-args"
+          args=()
+          if [[ -f "$args_file" ]]; then
+            while IFS= read -r arg; do
+              [[ -z "$arg" || "$arg" =~ ^[[:space:]]*# ]] && continue
+              args+=("$arg")
+            done < "$args_file"
+          fi
+
+          nix run nixpkgs#nix-update -- "${args[@]}" "${{ matrix.package }}"
+
+      - name: Create pull request
+        if: github.event_name != 'workflow_dispatch' || inputs.package == 'all' || inputs.package == matrix.package
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: update/${{ matrix.package }}
+          delete-branch: true
+          commit-message: "${{ matrix.package }}: update"
+          title: "${{ matrix.package }}: update"
+          body: |
+            Automated package update produced by `nix-update`.
+
+            Package: `${{ matrix.package }}`
+          labels: dependencies, automated
