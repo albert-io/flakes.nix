@@ -4,6 +4,14 @@ A small collection of Nix-packaged tools.
 
 ## Packages
 
+### depot
+
+Official command line interface for the Depot API.
+
+```sh
+nix run .#depot -- --help
+```
+
 ### dexter
 
 Fast implementation of the Elixir language server in Go.
@@ -22,9 +30,10 @@ nix run .#honeybadger-mcp-server -- --help
 
 ## Updating
 
-Each package has its own `packages/<name>/nix-update-args`, so both packages can be updated from the repository root with `nix-update`:
+Each package has its own `packages/<name>/nix-update-args`, so each package can be updated from the repository root with `nix-update`:
 
 ```sh
+nix run nixpkgs#nix-update -- depot
 nix run nixpkgs#nix-update -- dexter
 nix run nixpkgs#nix-update -- honeybadger-mcp-server
 ```

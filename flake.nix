@@ -23,6 +23,7 @@
           pkgs = pkgsFor system;
         in
         {
+          depot = pkgs.callPackage ./packages/depot/package.nix { };
           dexter = pkgs.callPackage ./packages/dexter/package.nix { };
           honeybadger-mcp-server = pkgs.callPackage ./packages/honeybadger-mcp-server/package.nix { };
         }

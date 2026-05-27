@@ -39,6 +39,9 @@ jobs:
       - name: Check flake
         run: nix flake check --allow-import-from-derivation
 
+      - name: Build depot
+        run: nix build .#depot --print-build-logs
+
       - name: Build dexter
         run: nix build .#dexter --print-build-logs
 
