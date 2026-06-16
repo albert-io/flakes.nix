@@ -8,13 +8,13 @@
 
 buildGoModule rec {
   pname = "dexter";
-  version = "0.7.0";
+  version = "0.7.1";
 
   src = fetchFromGitHub {
     owner = "remoteoss";
     repo = "dexter";
     tag = "v${version}";
-    hash = "sha256-MQ8LxSI2amecFUiNK6vED/nJKHgs5sRT7rJVi6cLdkc=";
+    hash = "sha256-VrKLi92fCkAL6C5dvydXuwOCp3dYXsDJSGk9rkHv1t8=";
   };
 
   nativeBuildInputs = [ installShellFiles ];
