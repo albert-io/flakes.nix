@@ -35,3 +35,6 @@ jobs:
 
       - name: Build honeybadger-mcp-server
         run: nix build .#honeybadger-mcp-server --print-build-logs
+
+      - name: Build playwright-cli
+        run: nix build .#playwright-cli --print-build-logs
