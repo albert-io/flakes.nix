@@ -28,6 +28,14 @@ Honeybadger MCP Server.
 nix run .#honeybadger-mcp-server -- --help
 ```
 
+### playwright-cli
+
+Playwright's agent CLI (`@playwright/cli`) — drive a browser through per-command terminal calls.
+
+```sh
+nix run .#playwright-cli -- --help
+```
+
 ## Updating
 
 Each package has its own `packages/<name>/nix-update-args`, so each package can be updated from the repository root with `nix-update`:
@@ -36,4 +44,5 @@ Each package has its own `packages/<name>/nix-update-args`, so each package can 
 nix run nixpkgs#nix-update -- depot
 nix run nixpkgs#nix-update -- dexter
 nix run nixpkgs#nix-update -- honeybadger-mcp-server
+nix run nixpkgs#nix-update -- playwright-cli
 ```
