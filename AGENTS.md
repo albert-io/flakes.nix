@@ -5,7 +5,7 @@ A flake exposing a handful of Nix-packaged CLI tools. Each package lives under `
 ## Adding a new package
 
 1. Create `packages/<name>/`:
-   - `package.nix` — the derivation. Model after an existing sibling (`dexter` for Go + shell completions, `honeybadger-mcp-server` for a minimal Go build). Start `src.hash` and `vendorHash` at `lib.fakeHash`.
+   - `package.nix` — the derivation. Model after an existing sibling (`dexter` for Go + shell completions, `honeybadger-cli` for a minimal Go build). Start `src.hash` and `vendorHash` at `lib.fakeHash`.
    - `default.nix` — one-liner: `{ pkgs }: pkgs.callPackage ./package.nix { }`.
    - `nix-update-args` — args passed to `nix-update`. `--use-github-releases` for tagged releases, `--version=branch` for unstable HEAD tracking.
 2. Register the package in three places (keep the lists alphabetized):

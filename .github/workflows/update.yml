@@ -15,7 +15,7 @@ on:
           - all
           - depot
           - dexter
-          - honeybadger-mcp-server
+          - honeybadger-cli
           - playwright-cli
 
 permissions:
@@ -31,7 +31,7 @@ jobs:
         package:
           - depot
           - dexter
-          - honeybadger-mcp-server
+          - honeybadger-cli
           - playwright-cli
 
     steps:

@@ -20,12 +20,12 @@ Fast implementation of the Elixir language server in Go.
 nix run .#dexter -- --help
 ```
 
-### honeybadger-mcp-server
+### honeybadger-cli
 
-Honeybadger MCP Server.
+Official command line interface for the Honeybadger API.
 
 ```sh
-nix run .#honeybadger-mcp-server -- --help
+nix run .#honeybadger-cli -- --help
 ```
 
 ### playwright-cli
@@ -43,6 +43,6 @@ Each package has its own `packages/<name>/nix-update-args`, so each package can 
 ```sh
 nix run nixpkgs#nix-update -- depot
 nix run nixpkgs#nix-update -- dexter
-nix run nixpkgs#nix-update -- honeybadger-mcp-server
+nix run nixpkgs#nix-update -- honeybadger-cli
 nix run nixpkgs#nix-update -- playwright-cli
 ```
