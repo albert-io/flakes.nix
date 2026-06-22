@@ -1,4 +1,4 @@
 # Upstream mixes tag schemes (v0.1.x alongside stray v0.4.x / v0.170.0 / v0.180.0).
 # Pin nix-update to the published 0.1.x line so it doesn't jump to an unrelated tag.
 --version-regex
-(0\.1\.[0-9]+)
+v?(0\.1\.[0-9]+)
