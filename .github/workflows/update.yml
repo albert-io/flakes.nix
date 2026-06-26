@@ -17,6 +17,7 @@ on:
           - dexter
           - honeybadger-mcp-server
           - playwright-cli
+          - tidewave-cli
 
 permissions:
   contents: write
@@ -33,6 +34,7 @@ jobs:
           - dexter
           - honeybadger-mcp-server
           - playwright-cli
+          - tidewave-cli
 
     steps:
       - name: Skip unselected package

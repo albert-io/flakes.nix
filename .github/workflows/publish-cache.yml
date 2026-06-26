@@ -50,3 +50,6 @@ jobs:
 
       - name: Build playwright-cli
         run: nix build .#playwright-cli --print-build-logs
+
+      - name: Build tidewave-cli
+        run: nix build .#tidewave-cli --print-build-logs
