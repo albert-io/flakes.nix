@@ -33,8 +33,8 @@ jobs:
       - name: Build dexter
         run: nix build .#dexter --print-build-logs
 
-      - name: Build honeybadger-mcp-server
-        run: nix build .#honeybadger-mcp-server --print-build-logs
+      - name: Build honeybadger-cli
+        run: nix build .#honeybadger-cli --print-build-logs
 
       - name: Build playwright-cli
         run: nix build .#playwright-cli --print-build-logs
