@@ -9,16 +9,16 @@
 # nix-update can bump it by git tag (see nix-update-args for the version pin).
 buildNpmPackage (finalAttrs: {
   pname = "playwright-cli";
-  version = "0.1.14";
+  version = "0.1.15";
 
   src = fetchFromGitHub {
     owner = "microsoft";
     repo = "playwright-cli";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-wLE04sfPMh43IzIp6/HKBjloy3iSSanSYdYtklc6lQ4=";
+    hash = "sha256-M0NZ7h1kSIsxktMWe5n75LDc+MHZvSq6b+iRx6opakU=";
   };
 
-  npmDepsHash = "sha256-0bvwryiyPskay+h8+0RiOmnamHkmcRRK00q7ZEPdj1g=";
+  npmDepsHash = "sha256-ZrO8yIqMYMQUlsQraejVgKRZ7klC5/8UsV3/H1EqYtA=";
 
   # Pure-JS CLI, no compile step — buildNpmPackage installs the package's
   # declared `playwright-cli` bin directly.
