@@ -6,19 +6,19 @@
 
 buildGoModule rec {
   pname = "honeybadger-mcp-server";
-  rev = "179baffee49b95f7398e2154f4d8cbe6ea195e31";
+  rev = "7620ad7403b5b4a6a849fcb98038f1ed84c24f0b";
   version = "unstable-${builtins.substring 0 7 rev}";
 
   src = fetchFromGitHub {
     owner = "honeybadger-io";
     repo = "honeybadger-mcp-server";
     inherit rev;
-    hash = "sha256-ib/zbYFKU73i20IAPd1bxkXMvk701Tdsh4AV/IgdJ/0=";
+    hash = "sha256-9/hZVqkXtMa1H8XXkQhy21HI5n9iVS08GUu5rAKYAwo=";
   };
 
   subPackages = [ "cmd/honeybadger-mcp-server" ];
 
-  vendorHash = "sha256-W7ui9bny+HGIvJRreri7zxlq2V2M0dVJwb/p1ATEfsE=";
+  vendorHash = "sha256-N4SI14Hm0bdLMilyZwqR70KToD2Xiav/u1uNsZJAOuw=";
 
   ldflags = [
     "-s"
