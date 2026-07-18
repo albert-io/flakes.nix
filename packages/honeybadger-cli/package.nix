@@ -8,20 +8,20 @@
 
 buildGoModule rec {
   pname = "honeybadger-cli";
-  version = "0.8.0";
+  version = "0.9.0";
 
   src = fetchFromGitHub {
     owner = "honeybadger-io";
     repo = "cli";
     tag = "v${version}";
-    hash = "sha256-BETEEjZoUGnWIo5wclC4OXtTyp2Ox0MDnYEizTONIJA=";
+    hash = "sha256-Qr8T40UgwViiOjfmnGZlvTUT4L7gV+fLJy8DWSMaVC0=";
   };
 
   nativeBuildInputs = [ installShellFiles ];
 
   subPackages = [ "cmd/hb" ];
 
-  vendorHash = "sha256-ErSYKv7Q9qNr8ljcLObpIBJ2mDfbDW9BHHfSZC0lBOE=";
+  vendorHash = "sha256-CdYt41J9TAQ93s65ZAX+hQjeZKJEkzvYEVZNKfpuF30=";
 
   ldflags = [
     "-s"
