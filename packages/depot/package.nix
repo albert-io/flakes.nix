@@ -8,13 +8,13 @@
 
 buildGoModule rec {
   pname = "depot";
-  version = "2.101.73";
+  version = "2.101.75";
 
   src = fetchFromGitHub {
     owner = "depot";
     repo = "cli";
     tag = "v${version}";
-    hash = "sha256-7nUA8NW+hy79x3u+WTISkNLCeIlrYux5ZBmwlPpq+/w=";
+    hash = "sha256-TMKWxyrNi3/dW5+iVkvoo6SyOS1a96dvwZpfEIhmUeI=";
   };
 
   nativeBuildInputs = [ installShellFiles ];
