@@ -13,7 +13,9 @@
       systems,
     }:
     let
-      eachSystem = nixpkgs.lib.genAttrs (import systems);
+      eachSystem = nixpkgs.lib.genAttrs (
+        nixpkgs.lib.intersectLists nixpkgs.lib.systems.flakeExposed (import systems)
+      );
       pkgsFor = system: import nixpkgs { inherit system; };
     in
     {
