@@ -26,7 +26,7 @@ buildNpmPackage (finalAttrs: {
 
   # Skip dependency install scripts. The one that matters is playwright-core's
   # postinstall browser download, which we don't want: consumers point Playwright
-  # at a system browser at runtime via PLAYWRIGHT_LAUNCH_OPTIONS_EXECUTABLE_PATH.
+  # at a system browser at runtime via PLAYWRIGHT_MCP_EXECUTABLE_PATH.
   npmFlags = [ "--ignore-scripts" ];
 
   meta = {
