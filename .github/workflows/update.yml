@@ -46,6 +46,8 @@ jobs:
 
       - uses: actions/checkout@v6
         if: github.event_name != 'workflow_dispatch' || inputs.package == 'all' || inputs.package == matrix.package
+        with:
+          ref: ${{ github.event.repository.default_branch }}
 
       - uses: cachix/install-nix-action@v31
         if: github.event_name != 'workflow_dispatch' || inputs.package == 'all' || inputs.package == matrix.package
@@ -86,8 +88,33 @@ jobs:
             Package: `${{ matrix.package }}`
           labels: dependencies, automated
 
-      - name: Check updated pull request
-        if: steps.pull-request.outputs.pull-request-operation == 'created' || steps.pull-request.outputs.pull-request-operation == 'updated'
+      - name: Approve package Check run
+        if: steps.pull-request.outputs.pull-request-number != ''
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh workflow run check.yml --ref "update/${{ matrix.package }}"
+          GH_REPO: ${{ github.repository }}
+          PR_HEAD_SHA: ${{ steps.pull-request.outputs.pull-request-head-sha }}
+        run: |
+          set -euo pipefail
+
+          for ((check_attempt = 0; check_attempt < 30; check_attempt++)); do
+            check_run=$(gh run list --workflow check.yml --event pull_request \
+              --commit "$PR_HEAD_SHA" --limit 1 \
+              --json databaseId,status,conclusion \
+              --jq '.[0] | [.databaseId, .status, .conclusion] | @tsv')
+            IFS=$'\t' read -r check_run_id check_status check_conclusion <<< "$check_run"
+
+            if [[ "$check_conclusion" == 'action_required' ]]; then
+              gh api --method POST "repos/$GH_REPO/actions/runs/$check_run_id/approve"
+              exit 0
+            fi
+
+            if [[ "$check_status" == 'in_progress' || "$check_status" == 'completed' ]]; then
+              exit 0
+            fi
+
+            sleep 2
+          done
+
+          echo '::error::Timed out waiting for the package pull request Check run'
+          exit 1
