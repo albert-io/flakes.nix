@@ -2,6 +2,9 @@
 
 A small collection of Nix-packaged tools.
 
+Packages are available for x86-64 Linux, ARM64 Linux, and Apple Silicon macOS.
+The current nixpkgs input no longer supports Intel macOS.
+
 ## Packages
 
 ### depot
