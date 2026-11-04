@@ -21,6 +21,7 @@ on:
           - tidewave-cli
 
 permissions:
+  actions: write
   contents: write
   pull-requests: write
 
@@ -54,6 +55,8 @@ jobs:
 
       - name: Update package
         if: github.event_name != 'workflow_dispatch' || inputs.package == 'all' || inputs.package == matrix.package
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
 
@@ -69,15 +72,22 @@ jobs:
           nix run nixpkgs#nix-update -- "${args[@]}" "${{ matrix.package }}"
 
       - name: Create pull request
+        id: pull-request
         if: github.event_name != 'workflow_dispatch' || inputs.package == 'all' || inputs.package == matrix.package
         uses: peter-evans/create-pull-request@v8
         with:
           branch: update/${{ matrix.package }}
           delete-branch: true
-          commit-message: "${{ matrix.package }}: update"
-          title: "${{ matrix.package }}: update"
+          commit-message: "chore(deps): update ${{ matrix.package }}"
+          title: "chore(deps): update ${{ matrix.package }}"
           body: |
             Automated package update produced by `nix-update`.
 
             Package: `${{ matrix.package }}`
           labels: dependencies, automated
+
+      - name: Check updated pull request
+        if: steps.pull-request.outputs.pull-request-operation == 'created' || steps.pull-request.outputs.pull-request-operation == 'updated'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run check.yml --ref "update/${{ matrix.package }}"
