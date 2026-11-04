@@ -29,7 +29,7 @@ jobs:
         run: nix flake show --allow-import-from-derivation
 
       - name: Check flake
-        run: nix flake check --allow-import-from-derivation
+        run: nix flake check --all-systems --allow-import-from-derivation
 
       - name: Build depot
         run: nix build .#depot --print-build-logs
