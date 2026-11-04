@@ -89,7 +89,7 @@ jobs:
           labels: dependencies, automated
 
       - name: Approve package Check run
-        if: steps.pull-request.outputs.pull-request-operation == 'created' || steps.pull-request.outputs.pull-request-operation == 'updated'
+        if: steps.pull-request.outputs.pull-request-number != ''
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
