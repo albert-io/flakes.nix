@@ -35,6 +35,11 @@ nix run .#honeybadger-cli -- --help
 
 Honeybadger MCP Server.
 
+Current upstream uses Honeybadger's v3 Data API. Set `HONEYBADGER_PERSONAL_AUTH_TOKEN`
+to an API Token. Legacy personal auth tokens no longer work. See the
+[upstream upgrade notes](https://github.com/honeybadger-io/honeybadger-mcp-server#upgrading-to-the-v3-data-api)
+for credential and tool changes.
+
 ```sh
 nix run .#honeybadger-mcp-server -- --help
 ```

@@ -1,24 +1,24 @@
 {
   lib,
-  buildGoModule,
+  buildGo127Module,
   fetchFromGitHub,
 }:
 
-buildGoModule rec {
+buildGo127Module rec {
   pname = "honeybadger-mcp-server";
-  rev = "e2c2c7ba48d6c288f13daa3774b290536d4e15c1";
+  rev = "19473ae95e2d0d245024139187cfaa6312545244";
   version = "unstable-${builtins.substring 0 7 rev}";
 
   src = fetchFromGitHub {
     owner = "honeybadger-io";
     repo = "honeybadger-mcp-server";
     inherit rev;
-    hash = "sha256-ChhK9t2151JgMeFA54pQiaZdQ5fy54c6q9mjvnUAqRU=";
+    hash = "sha256-YUGGdJdQYLCYobRZg18S9PLuA4Z1iA3INLxMp5Qy8ac=";
   };
 
   subPackages = [ "cmd/honeybadger-mcp-server" ];
 
-  vendorHash = "sha256-y0zY2hJAbVKMYVJXjF/xGBahVX0C+MCp5w2pi2LwL8o=";
+  vendorHash = "sha256-8iKIVaTMSu7USLOX1/euXBnOK+NzVIVTdA2CiuxJJ/g=";
 
   ldflags = [
     "-s"
