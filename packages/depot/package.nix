@@ -8,20 +8,20 @@
 
 buildGoModule rec {
   pname = "depot";
-  version = "2.103.8";
+  version = "2.103.33";
 
   src = fetchFromGitHub {
     owner = "depot";
     repo = "cli";
     tag = "v${version}";
-    hash = "sha256-m8LRbIMeMTIKHiwxD+HyUORJxu3w+XXSvwu2UK0pIjw=";
+    hash = "sha256-PszdxX8748qvPaBJDKdepR1QXOoC8WKxPug9AAPxehE=";
   };
 
   nativeBuildInputs = [ installShellFiles ];
 
   subPackages = [ "cmd/depot" ];
 
-  vendorHash = "sha256-B2D4NWxbALa35vq5RIWGkxRCw2Bsfw8yR+DASHe5omU=";
+  vendorHash = "sha256-UImwBUbYTJgkfZQjLPTR+eTEgiEdv7s4+PbWDrcOq+w=";
 
   ldflags = [
     "-s"
